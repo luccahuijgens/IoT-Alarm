@@ -1,3 +1,9 @@
+/* ClassTitle: TestReader
+ * Description: This class retrieves retrieves the events that are parsed in iotalarm.dataaccess.CalendarLoader and sends them to iotalarm.service.EventService.
+ * Used by: iotalarm.service.TestService
+ * Uses: iotalarm.domain.Event
+ */
+
 package iotalarm.dataaccess;
 
 import java.io.IOException;
@@ -14,7 +20,6 @@ import net.fortuna.ical4j.data.ParserException;
 public class TestReader {
 	private static TestReader instance;
 	private static List<Event> list = new ArrayList<>();
-	private static String url = "";
 
 	private TestReader() {
 		list.add(new Event(1, "Test Event", "Test Locatie", (getTestDate().getTime())/1000));
@@ -25,6 +30,11 @@ public class TestReader {
 		list.add(new Event(1, "Test Event", "Test Locatie", (getTestDate().getTime())/1000));
 	}
 
+	/* FunctionTitle: getTestDate()
+	 * Description: This function is used to return a test date, @SuppressWarnings is used to suppress the warnings that pope-up by tweaking the time units.
+	 * Used by TestReader(), updateEvents()
+	 */
+	@SuppressWarnings("deprecation")
 	private static Date getTestDate() {
 		Date result = new Date();
 		int currentMinutes = result.getMinutes();
@@ -52,6 +62,11 @@ public class TestReader {
 		return list;
 	}
 
+	/* FunctionTitle: getTodaysEvents()
+	 * Description: This function is used to retrieve the test events from the current day, on top of that it sorts the events by date. 
+	 * Used by: iotalarm.service.TestService.getEvents(String url)
+	 * Uses: isToday(long l)
+	 */
 	public static List<Event> getTodaysEvents() {
 		List<Event> result = new ArrayList<Event>();
 		for (Event e : list) {
@@ -67,6 +82,12 @@ public class TestReader {
 		return result;
 	}
 
+	/* FunctionTitle: isToday()
+	 * Description: This function makes a check if the event falls on the local date.
+	 * @SuppressWarnings is used to suppress the warnings that pope-up by tweaking the time units
+	 * Used by: getTodaysEvents()
+	 */
+	@SuppressWarnings("deprecation")
 	private static boolean isToday(long l) {
 		LocalDate today=LocalDate.now();
 		Date lDate = new Date(Long.parseLong(String.valueOf(l)) * 1000);

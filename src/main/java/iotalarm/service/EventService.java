@@ -1,12 +1,12 @@
-/*
-This service class is used to get the required event data from the EventReader. 
-*/
-
+/* ClassTitle: EventService
+ * Description: This service is responsible for calling the proper methods in the iotalarm.dataaccess.EventReader and returning the results to the iotalarm.webservices.EventResource.
+ * Used by: iotalarm.service.ServiceProvider, iotalarm.webservices.EventResource (through iotalarm.service.ServiceProvider)
+ * Uses: iotalarm.dataaccess.EventReader
+ */
 package iotalarm.service;
 
 import java.io.IOException;
 import java.util.List;
-
 import iotalarm.dataaccess.EventReader;
 import iotalarm.domain.Event;
 import net.fortuna.ical4j.data.ParserException;

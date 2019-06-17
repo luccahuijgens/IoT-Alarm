@@ -1,6 +1,7 @@
-/*
-This class is responsible for storing the event. 
-*/
+/* ClassTitle: Event
+ * Description: This class is used to store the events that are parsed from the ical file in the iotalarm.dataaccess.CalendarLoader and created from iotalarm.dataaccess.TestReader.
+ * Used by: iotalarm.dataaccess.TestReader, iotalarm.dataaccess.CalendarLoader
+ */
 
 package iotalarm.domain;
 

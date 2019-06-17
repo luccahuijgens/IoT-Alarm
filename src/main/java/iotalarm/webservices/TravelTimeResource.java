@@ -1,27 +1,25 @@
 /* ClassTitle: TravelTimeResource
  * Description: This class is responsible for handling requests regarding the travel time.
  * Its main purpose is to retrieve and set the current travel time.
- * Uses: BasicResource, TravelTimeService
+ * Uses: iotalarm.webservices.BasicResource, iotalarm.service.TravelTimeService, iotalarm.service.ServiceProvider
  */
 
 package iotalarm.webservices;
 
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
+import iotalarm.service.ServiceProvider;
 import iotalarm.service.TravelTimeService;
 
 @Path("timeoffset")
 public class TravelTimeResource extends BasicResource{
-	private TravelTimeService service = new TravelTimeService();
+	private TravelTimeService service =  ServiceProvider.getTravelTimeService();
 
 	@GET
 	@Produces("application/json")
@@ -37,7 +35,7 @@ public class TravelTimeResource extends BasicResource{
 	
 	@PUT
 	@Produces("application/json")
-	// The traveltime value is used as
+	// Note that the traveltime value is seen as a amount of minutes in the API. Example a value of "5" is seen as 5 minutes.
 	public String setTravelTime(@FormParam("traveltime") int traveltime){
 		try {
 			service.setTravelTime(traveltime);

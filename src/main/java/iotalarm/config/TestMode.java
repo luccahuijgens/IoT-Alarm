@@ -1,3 +1,9 @@
+/* ClassTitle: TestMode
+ * Description: This class is responsible for storing and providing the current test mode
+ * Note that this only stored in a session and is lost after deploy instance is closed, because the value of testmode is normally false and the default value is false as well
+ * this should not be a issue in normal use of the API.
+ * Used by: iotalarm.service.TestModeService
+ */
 package iotalarm.config;
 
 public class TestMode {
@@ -20,7 +26,7 @@ public class TestMode {
         return instance;
     }
 	
-	public static void setTestMode () {
+	public void changeTestMode () {
 		if (testModes == false){
 			testModes = (!testModes);
 			}

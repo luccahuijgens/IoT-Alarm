@@ -1,7 +1,9 @@
-/*
-This class is responsible for calling the CalendarLoader class with the user's schedule url, 
-sorting out the events in a order and makes a check to see if a event is today.
-*/
+/* ClassTitle: TestReader
+ * Description: This class is responsible for calling iotalarm.dataaccess.CalendarLoader with the user's schedule url, 
+ * sorting out the events in a order and making a check to see if a event is today.
+ * Used by: iotalarm.service.EventService
+ * Uses: iotalarm.dataaccess.CalendarLoader
+ */
 
 package iotalarm.dataaccess;
 
@@ -60,7 +62,12 @@ public class EventReader {
 		return result;
 	}
 
-// Compares the current system date to the event date. 
+	/* FunctionTitle: isToday()
+	 * Description: This function makes a check if the event falls on the local date.
+	 * @SuppressWarnings is used to suppress the warnings that pope-up by tweaking the time units
+	 * Used by: getTodaysEvents()
+	 */
+@SuppressWarnings("deprecation")
 private static boolean isToday(long l) {
 	LocalDate today=LocalDate.now(); 
 	Date lDate = new Date(Long.parseLong(String.valueOf(l)) * 1000);

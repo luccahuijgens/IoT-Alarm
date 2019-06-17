@@ -1,6 +1,8 @@
-/*
-This class is responsible for retrieving the user’s schedule and converting it to an event object.
-*/
+/* ClassTitle: CalendarLoader
+ * Description: This class is responsible for parsing the ical-files and turning them into event objects.
+ * Used by: iotalarm.dataaccess.EventReader
+ * Uses: iotalarm.domain.Event
+ */
 
 package iotalarm.dataaccess;
 
@@ -20,6 +22,11 @@ public class CalendarLoader {
 	private ArrayList<Event> events=new ArrayList<Event>();
 	Calendar cal;
 	
+	/* FunctionTitle: CalendarLoader(String url)
+	 * Description: This function is responsible for connecting to the provided url with the ical-file. Converting the result into a Calendar type.
+	 * Used by: iotalarm.dataaccess.EventReader and iotalarm.dataaccess.EventReader.updateUrl(String newurl)
+	 * Uses: fillEvents()
+	 */
 	public CalendarLoader(String url) {
 			CalendarBuilder builder = new CalendarBuilder();
 			try{ 
@@ -33,7 +40,13 @@ public class CalendarLoader {
 				}
 			}
 
-	
+
+	/* FunctionTitle: fillEvents()
+	 * Description: This function is responsible for converting the components in the Calendar type into events.
+	 * To prevent the API from using its own local timezone (this is a issue because the servers can be located in another country) the date is converted to Unix Epoch.
+	 * Used by: iotalarm.dataaccess.EventReader and iotalarm.dataaccess.EventReader.updateUrl(String newurl)
+	 * Uses: fillEvents()
+	 */
 	private boolean fillEvents() {
 		try {
 		ComponentList calendarevents = cal.getComponents().getComponents(
@@ -41,7 +54,7 @@ public class CalendarLoader {
 		for(int i = 0; i < calendarevents.size(); i++) {
 			VEvent event = (VEvent) calendarevents.get(i);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
-			//Get the unix Epoch time by making a devide with 1000.
+			//Get the Unix Epoch time by making a divide with 1000.
 			long unixEpoch = (sdf.parse(event.getStartDate().getValue()).getTime() /1000);
 			Event parsedEvent = new Event(i+1,event.getSummary().getValue(),event.getLocation().getValue(),unixEpoch);
 			events.add(parsedEvent);

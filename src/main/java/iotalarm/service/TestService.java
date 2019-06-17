@@ -1,3 +1,8 @@
+/* ClassTitle: TestService
+ * Description: This service is responsible for retrieving the test events from TestReader for EventResource.
+ * Used by: iotalarm.service.ServiceProvider, iotalarm.webservices.EventResource (through iotalarm.service.ServiceProvider)
+ * Uses: TestReader
+ */
 package iotalarm.service;
 
 import java.io.IOException;

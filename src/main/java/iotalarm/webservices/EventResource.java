@@ -1,7 +1,7 @@
 /* ClassTitle: EventResource
  * Description: This class is responsible for handling requests regarding events.
  * Its main purpose is to allow events to be retrieved from the service package/layer.
- * Uses: BasicResource, EventResource, ServiceProvider
+ * Uses: iotalarm.webservices.BasicResource, iotalarm.service.BasicResourceServiceProvider, iotalarm.service.CalendarService
  */
 
 package iotalarm.webservices;
@@ -13,7 +13,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
 import iotalarm.domain.Event;
 import iotalarm.service.CalendarService;
 import iotalarm.service.ServiceProvider;
@@ -29,7 +28,7 @@ public class EventResource extends BasicResource {
 	 * Description: This function is responsible handling requests for events based on a calendarurl.
 	 * Example: https://mijnrooster.sharepoint.hu.nl/ical?[various numbers and letters]&group=false&eu=[various numbers and letters]=&h=[various numbers and letters]=.
 	 * If this fails, it assumes the given url is faulty and returns a message requesting an correct one. 
-	 * Uses: BasicResource.NotFoundJSON, EventResource.convertJson, ServiceProvider.getEvents
+	 * Uses: iotalarm.webservices.BasicResource.NotFoundJSON(), convertJson(Event e), iotalarm.service.ServiceProvider.getEvents(String url)
 	 */
 	public String getEvents(@HeaderParam("calendarurl") String url) {
 		try {
@@ -50,7 +49,7 @@ public class EventResource extends BasicResource {
 	 * Description: This function is responsible for handling requests for the events of the current day.
 	 * Similar to the function getEvents it is based on the calendarurl (see mentioned function for a example).
 	 * If this fails, it assumes the given url is faulty and returns a message requesting an correct one.
-	 * Uses: BasicResource.NotFoundJSON, EventResource.convertJson, ServiceProvider.getTodaysEvents
+	 * Uses: iotalarm.webservices.BasicResource.NotFoundJSON(), convertJson(Event e), iotalarm.service.ServiceProvider.getTotdaysEvents(String url)
 	 */
 	public String getTodaysEvents(@HeaderParam("calendarurl") String url) {
 		try {
@@ -71,7 +70,7 @@ public class EventResource extends BasicResource {
 	 * Description: This function is responsible for handling requests for the first event of the current day.
 	 * Similar to the function getEvents it is based on the calendarurl (see mentioned function for a example).
 	 * If this fails, it assumes the given url is faulty and returns a message requesting an correct one.
-	 * Uses: BasicResource.NotFoundJSON, EventResource.convertJson, ServiceProvider.getTodaysFirstEvent
+	 * Uses: iotalarm.webservices.BasicResource.NotFoundJSON(), convertJson(Event e), iotalarm.service.ServiceProvider.getTodaysFirstEvent(String url)
 	 */
 	public String getTodaysFirstEvent(@HeaderParam("calendarurl") String url) {
 		try {

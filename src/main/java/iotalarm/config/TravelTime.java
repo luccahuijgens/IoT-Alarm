@@ -1,3 +1,9 @@
+/* ClassTitle: TravelTime
+ * Description: This class is responsible for storing and providing the current travel time.
+ * Note that this only stored in a session and is lost after deploy instance is closed, for this reason any device making use of this needs to store the travel time locally.
+ * Used by: iotalarm.service.TravelTimeService
+ */
+
 package iotalarm.config;
 
 public class TravelTime {
@@ -20,7 +26,7 @@ public class TravelTime {
         return instance;
     }
 	
-	public static void setTravelTime(int travelTime){
+	public void setTravelTime(int travelTime){
 		TravelTime.travelTime = travelTime;
 	}
 	
