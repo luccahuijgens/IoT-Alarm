@@ -9,6 +9,12 @@ package iotalarm.dataaccess;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import iotalarm.domain.Event;
@@ -51,19 +57,40 @@ public class CalendarLoader {
 		try {
 		ComponentList calendarevents = cal.getComponents().getComponents(
 	            Component.VEVENT);
+		ZonedDateTime now=ZonedDateTime.now();
 		for(int i = 0; i < calendarevents.size(); i++) {
 			VEvent event = (VEvent) calendarevents.get(i);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
 			//Get the Unix Epoch time by making a divide with 1000.
-			long unixEpoch = (sdf.parse(event.getStartDate().getValue()).getTime() /1000);
-			Event parsedEvent = new Event(i+1,event.getSummary().getValue(),event.getLocation().getValue(),unixEpoch);
+			ZonedDateTime eventDate=convertStringToDate(event.getStartDate().getValue());
+			Event parsedEvent = new Event(i+1,event.getSummary().getValue(),event.getLocation().getValue(),eventDate);
+			if (parsedEvent.getDate().isAfter(now)) {
 			events.add(parsedEvent);
+			}
 		}
 		return true;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	private ZonedDateTime convertStringToDate(String dateString) {
+		System.out.println(dateString);
+		int year=Integer.parseInt(dateString.substring(0,4));
+		int month=Integer.parseInt(dateString.substring(4,6));
+		int day=Integer.parseInt(dateString.substring(6,8));
+		if (dateString.length()<=8) {
+			LocalDateTime date=LocalDateTime.of(year, month, day, 0, 0,0);
+			return ZonedDateTime.of(date, ZoneOffset.UTC);
+		}else {
+			int hour=Integer.parseInt(dateString.substring(9,11));
+			int minutes=Integer.parseInt(dateString.substring(11,13));
+			int seconds=Integer.parseInt(dateString.substring(13,15));
+			LocalDateTime date = LocalDateTime.of(year,month,day,hour,minutes,seconds);
+			return ZonedDateTime.of(date, ZoneOffset.UTC);
+		}
+		
 	}
 	
 	public ArrayList<Event> getEvents(){

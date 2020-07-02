@@ -8,7 +8,6 @@ package iotalarm.service;
 
 public class ServiceProvider {
 	private static CalendarService eventService=new EventService();
-	private static CalendarService testService=new TestService(); 
 	private static TestModeService testmoduesService=new TestModeService();
 	private static TravelTimeService traveltimeService=new TravelTimeService();
 
@@ -21,11 +20,7 @@ public class ServiceProvider {
 	 * Uses: iotalarm.service.TestService, iotalarm.service.EventService, iotalarm.service.TestModeService.getTestMode()
 	 */
 	public static CalendarService getCalendarService() {
-		if (testmoduesService.getTestMode()) {
-			return testService;
-		}else {
 			return eventService;
-		}
 	}
 	
 	public static TravelTimeService getTravelTimeService (){

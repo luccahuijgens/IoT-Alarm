@@ -9,6 +9,8 @@ package iotalarm.dataaccess;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,7 +58,7 @@ public class EventReader {
 		}
 		Collections.sort(result, new Comparator<Event>() {
 			  public int compare(Event o1, Event o2) {
-			      return Long.valueOf(o1.getDate()).compareTo(Long.valueOf(o2.getDate()));
+			      return o1.getDate().compareTo(o2.getDate());
 			  }
 			});
 		return result;
@@ -68,9 +70,9 @@ public class EventReader {
 	 * Used by: getTodaysEvents()
 	 */
 @SuppressWarnings("deprecation")
-private static boolean isToday(long l) {
+private static boolean isToday(ZonedDateTime zonedDateTime) {
 	LocalDate today=LocalDate.now(); 
-	Date lDate = new Date(Long.parseLong(String.valueOf(l)) * 1000);
+	Date lDate = new Date(Long.parseLong(String.valueOf(zonedDateTime)) * 1000);
 	LocalDate parsedEventDate=LocalDate.of(lDate.getYear()+1900, lDate.getMonth()+1, lDate.getDate());
 		if (parsedEventDate.isEqual(today)) {
 			return true;

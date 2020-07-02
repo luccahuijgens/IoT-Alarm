@@ -5,18 +5,20 @@
 
 package iotalarm.domain;
 
+import java.time.ZonedDateTime;
+
 public class Event {
 private int id;
 private String title;
 private String location;
-private long unixEpoch;
+private ZonedDateTime date;
 
-public Event(int id, String title, String location, long unixEpoch) {
+public Event(int id, String title, String location, ZonedDateTime date) {
 	super();
 	this.id = id;
 	this.title = title;
 	this.location = location;
-	this.unixEpoch = unixEpoch; 
+	this.date=date; 
 }
 
 public int getId() {
@@ -42,13 +44,14 @@ public void setLocation(String location) {
 	this.location = location;
 }
 
-public long getDate() {
-	return unixEpoch;
+public ZonedDateTime getDate() {
+	return date;
 }
 
-public void setDate(long unixEpoch) {
-	this.unixEpoch = unixEpoch;
+public void setDate(ZonedDateTime date) {
+	this.date = date;
 }
+
 
 
 }

@@ -6,6 +6,10 @@
 
 package iotalarm.webservices;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
@@ -87,11 +91,23 @@ public class EventResource extends BasicResource {
 	
 	private JsonObjectBuilder convertJson(Event e) {
 		JsonObjectBuilder job = Json.createObjectBuilder();
+		ZoneId zoneId=ZoneId.of("Europe/Amsterdam");
 		job.add("id", e.getId());
 		job.add("title", e.getTitle());
 		job.add("location", e.getLocation());
-		job.add("date",e.getDate());
+		job.add("time", formatTime(e.getDate().withZoneSameInstant(zoneId).toLocalDateTime()));
+		job.add("date",formatDate(e.getDate().withZoneSameInstant(zoneId).toLocalDateTime()));
 		return job;
+	}
+	
+	private String formatDate(LocalDateTime time) {
+		DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return time.format(formatter);
+	}
+	
+	private String formatTime(LocalDateTime time) {
+		DateTimeFormatter formatter=DateTimeFormatter.ofPattern("HH:mm:ss");
+		return time.format(formatter);
 	}
 
 }
