@@ -94,7 +94,11 @@ public class EventResource extends BasicResource {
 		ZoneId zoneId=ZoneId.of("Europe/Amsterdam");
 		job.add("id", e.getId());
 		job.add("title", e.getTitle());
-		job.add("location", e.getLocation());
+		if (!e.getLocation().equals("")) {
+			job.add("location", e.getLocation());
+		}else{
+				job.add("location", "N/A");
+		}
 		job.add("time", formatTime(e.getDate().withZoneSameInstant(zoneId).toLocalDateTime()));
 		job.add("date",formatDate(e.getDate().withZoneSameInstant(zoneId).toLocalDateTime()));
 		return job;
